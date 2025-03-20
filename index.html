@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>アプリ起動リダイレクト</title>
+  <script>
+    window.onload = function() {
+      // 起動したいカスタムプロトコルURLを設定します
+      var customUrl = "myapp-discord://discord?param=test";
+      // リダイレクトを試みます
+      window.location.href = customUrl;
+    };
+  </script>
+</head>
+<body>
+  <p>アプリを起動中です。自動的に移動しない場合は、<a href="myapp-discord://discord?param=test">こちらをクリック</a>してください。</p>
+</body>
+</html>
