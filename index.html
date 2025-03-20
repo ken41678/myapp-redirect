@@ -5,14 +5,29 @@
   <title>アプリ起動リダイレクト</title>
   <script>
     window.onload = function() {
-      // 起動したいカスタムプロトコルURLを設定します
-      var customUrl = "myapp-discord://discord?param=test";
-      // リダイレクトを試みます
-      window.location.href = customUrl;
+      // URLのクエリパラメーターから「redirect」を取得する関数
+      function getQueryParam(param) {
+        let params = new URLSearchParams(window.location.search);
+        return params.get(param);
+      }
+
+      var redirectUrl = getQueryParam("redirect");
+
+      // ここで必要なら、ホワイトリストによるチェックなどを実施する
+      if (redirectUrl && (redirectUrl.startsWith("myapp-discord://") || redirectUrl.startsWith("myapp-excel://"))) {
+        window.location.href = redirectUrl;
+      } else {
+        document.body.innerHTML = "<p>不正なリダイレクト先です。</p>";
+      }
     };
   </script>
 </head>
 <body>
-  <p>アプリを起動中です。自動的に移動しない場合は、<a href="myapp-discord://discord?param=test">こちらをクリック</a>してください。</p>
+  <p>アプリを起動中です。自動的に移動しない場合は、<a id="fallback-link" href="#">こちらをクリック</a>してください。</p>
+  <script>
+    // fallbackリンクにも同じリダイレクト先を設定
+    var params = new URLSearchParams(window.location.search);
+    document.getElementById("fallback-link").href = params.get("redirect") || "#";
+  </script>
 </body>
 </html>
