@@ -4,26 +4,24 @@
   <meta charset="UTF-8">
   <title>アプリ起動リダイレクト</title>
   <script>
-    window.onload = function() {
+    document.addEventListener("DOMContentLoaded", function() {
       // URLのクエリパラメーターから「redirect」を取得する関数
       function getQueryParam(param) {
         let params = new URLSearchParams(window.location.search);
         return params.get(param);
       }
-
       var redirectUrl = getQueryParam("redirect");
-
-      // ここで必要なら、ホワイトリストによるチェックなどを実施する
+      // ホワイトリストチェック：ここでは myapp-discord:// と myapp-excel:// のみ許可
       if (redirectUrl && (redirectUrl.startsWith("myapp-discord://") || redirectUrl.startsWith("myapp-excel://"))) {
-        window.location.href = redirectUrl;
+        window.location.replace(redirectUrl);  // 現在のページを履歴置換してリダイレクト実行
       } else {
         document.body.innerHTML = "<p>不正なリダイレクト先です。</p>";
       }
-    };
+    });
   </script>
 </head>
 <body>
-  <p>アプリを起動中です。自動的に移動しない場合は、<a id="fallback-link" href="#">こちらをクリック</a>してください。</p>
+  <p>アプリを起動中です。自動でリダイレクトされない場合は、<a id="fallback-link" href="#">こちらをクリック</a>してください。</p>
   <script>
     // fallbackリンクにも同じリダイレクト先を設定
     var params = new URLSearchParams(window.location.search);
