@@ -11,9 +11,9 @@
         return params.get(param);
       }
       var redirectUrl = getQueryParam("redirect");
-      // ホワイトリストチェック：ここでは myapp-default:// のみ許可
-      if (redirectUrl && redirectUrl.startsWith("myapp-default://")) {
-        window.location.replace(redirectUrl);  // 履歴を置換してリダイレクト実行
+      // ホワイトリストチェック：ここでは myapp-discord:// と myapp-excel:// のみ許可
+      if (redirectUrl && (redirectUrl.startsWith("myapp-discord://") || redirectUrl.startsWith("myapp-default://"))) {
+        window.location.replace(redirectUrl);  // 現在のページを履歴置換してリダイレクト実行
       } else {
         document.body.innerHTML = "<p>不正なリダイレクト先です。</p>";
       }
