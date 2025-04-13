@@ -11,8 +11,8 @@
         return params.get(param);
       }
       var redirectUrl = getQueryParam("redirect");
-      // ホワイトリストチェック：リダイレクト先が "myapp-" で始まる場合にのみ許可
-      if (redirectUrl && redirectUrl.startsWith("myapp-")) {
+      // ホワイトリストチェック：ここでは myapp-default:// のみ許可
+      if (redirectUrl && redirectUrl.startsWith("myapp-default://")) {
         window.location.replace(redirectUrl);  // 履歴を置換してリダイレクト実行
       } else {
         document.body.innerHTML = "<p>不正なリダイレクト先です。</p>";
